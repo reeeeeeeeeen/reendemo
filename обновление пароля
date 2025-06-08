@@ -1,0 +1,55 @@
+Title="ОБНОВЛЕНИЕ ПАРОЛЯ" Height="450" Width="800" MinHeight="350" MinWidth="600">
+    <Viewbox Stretch="Uniform">
+        <Grid Width="739" Height="408">
+            <Label x:Name="Label1" Content="Вы успешно авторизировались. Пожалуйста, измените пароль" HorizontalAlignment="Center" Height="40" Margin="100,16,0,0" VerticalAlignment="Top"></Label>
+            <Label x:Name="Label2" Content="Старый пароль" HorizontalAlignment="Left" Height="40" Margin="148,46,0,0" VerticalAlignment="Top"></Label>
+            <Label x:Name="Label3" Content="Новый пароль" HorizontalAlignment="Left" Height="43" Margin="148,150,0,0" VerticalAlignment="Top"></Label>
+            <Label x:Name="Label4" Content="Подтвердите пароль" HorizontalAlignment="Left" Height="40" Margin="148,250,0,0" VerticalAlignment="Top"></Label>
+            <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Height="33" Width="250" Margin="148,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top"></TextBox>
+            <TextBox x:Name="TextBox2" HorizontalAlignment="Left" Height="33" Width="250" Margin="148,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top"></TextBox>
+            <TextBox x:Name="TextBox3" HorizontalAlignment="Left" Height="33" Width="250" Margin="148,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top"></TextBox>
+            <Button x:Name="button2" Content="Изменить пароль" HorizontalAlignment="Left" Height="45" Width="200" Margin="300,350,0,0" VerticalAlignment="Top" Click="button2_Click" ></Button>
+        </Grid>
+    </Viewbox>
+
+     public partial class UpdatePass : Window
+    {
+        OtelEntities db = new OtelEntities();
+        private int usIDUser;
+        public UpdatePass(int usIDUser)
+        {
+            this.usIDUser = usIDUser;
+            InitializeComponent();
+        }
+
+       
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            var user = (from x in db.User where x.IDUser == usIDUser select x).ToArray();
+            if (user[0].Password == TextBox1.Text)
+            {
+
+                if (TextBox2.Text == TextBox3.Text)
+                {
+                    user[0].Password = TextBox2.Text;
+                    db.SaveChanges();
+                    MessageBox.Show("Пароль успешно изменен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    user[0].Date = DateTime.Now;
+                    user[0].Count = 0;
+                    db.SaveChanges();
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Введенные пароли не совпадают", "!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Старый пароль не совпадает", "Пожалуйста перепроверьте введенные данные", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    }
+}
