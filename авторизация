@@ -32,7 +32,7 @@ namespace Hotel
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-   public partial class MainWindow : Window
+    public partial class MainWindow : Window
     {
         OtelEntities db = new OtelEntities();
 
@@ -40,6 +40,7 @@ namespace Hotel
         {
             InitializeComponent();
         }
+        private int usID;
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
             // организуем обработчик ошибок кода
@@ -61,8 +62,14 @@ namespace Hotel
                         // проверяем правильность введённого пароля для выбранного пользователя
                         if (TextBox2.Text == User[0].Password)
                         {
-                            // вычисляем количество дней, прошедших после последнего входа
-                            
+                            if (User[0].Date == null)
+                            {
+                                usID = User[0].IDUser;
+                                MessageBox.Show("Добро пожаловать. При первом входе в систему необходимо изменить пароль", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); UpdatePass window3 = new UpdatePass(usID);
+                                UpdatePass updatePass = new UpdatePass(usID);
+                                updatePass.Show();
+                                Close();
+                            }
                             DateTime d1 = DateTime.Now;
                             DateTime d2 = Convert.ToDateTime(User[0].Date);
                             TimeSpan d = d1 - d2;
@@ -85,12 +92,12 @@ namespace Hotel
                                         admin.Show();
                                         Close();
                                         break;
-                                    case 3:
+                                   case 3:
                                         MessageBox.Show("Добро пожаловать. Вы успешно авторизировались как пользователь " + User[0].MiddleName, "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                                         Client client = new Client();
                                         client.Show();
                                         Close();
-                                        break;
+                                            break;
                                     default:
                                         MessageBox.Show("Данные не обнаружены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                                         break;
