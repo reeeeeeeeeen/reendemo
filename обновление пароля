@@ -28,7 +28,6 @@ Title="ОБНОВЛЕНИЕ ПАРОЛЯ" Height="450" Width="800" MinHeight="35
             var user = (from x in db.User where x.IDUser == usIDUser select x).ToArray();
             if (user[0].Password == TextBox1.Text)
             {
-
                 if (TextBox2.Text == TextBox3.Text)
                 {
                     user[0].Password = TextBox2.Text;
