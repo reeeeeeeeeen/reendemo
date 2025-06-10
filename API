@@ -1,3 +1,19 @@
+Title="MainWindow" Height="450" Width="800" MinHeight="500" MinWidth="850">
+    <Viewbox Stretch="Uniform">
+        <Grid>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Label Content="тестирование"/>
+                <TextBox x:Name="FullNameTB" FontSize="10" Height="30" Width="150" Margin="15"/>
+                <TextBox x:Name="ResultTB" FontSize="10" Height="30" Width="150" Margin="15" />
+                <Button x:Name="check" Margin="15" Content="проверка" HorizontalAlignment="Left" Height="20" FontSize="10" Width="130" VerticalAlignment="Top" Click="check_Click" />
+                <Button x:Name="Get"  Margin="15" Content="загрузить имя" HorizontalAlignment="Left" FontSize="10" Height="20" Width="130" VerticalAlignment="Top" Click="Get_Click"/>
+
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Window>
+
+
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 
